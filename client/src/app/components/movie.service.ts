@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 export class MoviesService {
   private movies: Movie[] = [];
   private moviesUpdated = new BehaviorSubject<Movie[]>([]);
+  private movie: Movie;
 
   emotions: Emotions[] = [
     { emotion: "happy" },
@@ -48,7 +49,8 @@ export class MoviesService {
   }
 
   getMoviesUpdateListener() {
-    return this.moviesUpdated.asObservable();
+    // return this.moviesUpdated.asObservable();
+    return this.moviesUpdated;
   }
 
   getMovie(id: string) {
