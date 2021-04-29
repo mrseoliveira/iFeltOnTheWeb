@@ -2,7 +2,7 @@ const Movie = require("../models/movies");
 const mongoose = require("mongoose");
 
 const cors = require("cors");
-//camada cors - acesso via angular
+
 let corsOptions = {
   origin: "http://localhost:4200",
 };
@@ -28,7 +28,7 @@ exports.createMovie =
     movie
       .save()
       .then((movieAdded) => {
-        console.log("controller server", movieAdded._id);
+        // console.log("controller server", movieAdded._id);
         res.status(201).json({
           message: "Movie created",
           movieId: movieAdded._id,
@@ -42,7 +42,7 @@ exports.listMovies =
   (req, res, next) => {
     Movie.find()
       .then((documents) => {
-        console.log("getMovies server", documents);
+        // console.log("getMovies server", documents);
         res.status(200).json({
           message: "Movies sent",
           movies: documents,
@@ -58,7 +58,7 @@ exports.listMovies =
 exports.getMovie =
   ("api/movies/:id",
   (req, res, next) => {
-    console.log("req.params", req.params);
+    // console.log("req.params", req.params);
     Movie.findById(req.params.id)
       .then((movie) => {
         res.status(200).json({
