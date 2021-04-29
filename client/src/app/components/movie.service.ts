@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Movie } from "./models/movie.model";
 import { Emotions } from "./models/emotions";
 import { BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 
@@ -50,7 +51,9 @@ export class MoviesService {
     return this.moviesUpdated.asObservable();
   }
 
-  getMovie(id: number) {
-    return this.httpClient.get<Movie>("http://localhost:8080/api/movies/" + id);
+  getMovie(id: string) {
+    return this.httpClient
+      .get<{ returnedMovie: Movie }>("http://localhost:8080/api/movies/" + id)
+      .pipe(map((res) => res.returnedMovie));
   }
 }

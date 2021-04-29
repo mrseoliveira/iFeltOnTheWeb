@@ -15,7 +15,7 @@ import { compileDirectiveFromRender2 } from "@angular/compiler/src/render3/view/
 export class CreateMovieComponent implements OnInit {
   private mode = "create";
   private getId: string;
-  movieId: number;
+  movieId: string;
   private movie: Movie;
 
   constructor(
@@ -30,7 +30,8 @@ export class CreateMovieComponent implements OnInit {
       if (paramMap.has("movieId")) {
         this.mode = "edit";
         this.getId = paramMap.get("movieId");
-        this.movieId = +this.getId;
+        // this.movieId = +this.getId;
+        this.movieId = this.getId;
         console.log("ngOninit create", this.movieId);
         this.moviesService
           .getMovie(this.movieId)
