@@ -44,7 +44,7 @@ export class MoviesService {
       .post<Movie>("http://localhost:8080/api/movies", movie)
       .subscribe((responseData) => {
         console.log("responseData", responseData);
-        this.router.navigate(["/"]);
+        // this.router.navigate(["/"]);
       });
   }
 

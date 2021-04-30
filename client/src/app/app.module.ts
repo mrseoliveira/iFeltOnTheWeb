@@ -8,7 +8,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { HeaderComponent } from "./components/header/header.component";
-import { MovieComponent } from "./components/movies/list/movie.component";
+import { ListMoviesComponent } from "./components/movies/list/listMovies.component";
 import { CreateMovieComponent } from "./components/movies/create/createMovie.component";
 
 @NgModule({
@@ -16,7 +16,7 @@ import { CreateMovieComponent } from "./components/movies/create/createMovie.com
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    MovieComponent,
+    ListMoviesComponent,
     CreateMovieComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],

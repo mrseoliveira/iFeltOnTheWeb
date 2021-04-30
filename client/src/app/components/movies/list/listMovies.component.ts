@@ -1,17 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { MoviesService } from "./../../movie.service";
+import { MoviesService } from "../../movie.service";
 
-import { Movie } from "./../../models/movie.model";
-import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
+import { Movie } from "../../models/movie.model";
 
 @Component({
-  selector: "app-movie",
-  templateUrl: "./movie.component.html",
-  styleUrls: ["./movie.component.css"],
+  selector: "app-list-movies",
+  templateUrl: "./listMovies.component.html",
+  styleUrls: ["./listMovies.component.css"],
 })
-export class MovieComponent implements OnInit {
+export class ListMoviesComponent implements OnInit {
   movies: Movie[] = [];
   private MoviesSub: Subscription;
 
