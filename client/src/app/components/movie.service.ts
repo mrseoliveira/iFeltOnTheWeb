@@ -29,7 +29,7 @@ export class MoviesService {
       )
       .subscribe((postData) => {
         this.movies = postData.movies;
-        // console.log(this.movies);
+        console.log(this.movies);
         this.moviesUpdated.next([...this.movies]);
       });
   }
