@@ -3,6 +3,7 @@ import { MoviesService } from "./../../movie.service";
 import { NgForm } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { Movie } from "./../../models/movie.model";
 
@@ -16,6 +17,9 @@ export class CreateMovieComponent implements OnInit {
   private movieId: string;
   private movie: Movie;
 
+  form: FormGroup;
+  imagePreview: string;
+
   constructor(
     public moviesService: MoviesService,
     private router: Router,
@@ -23,6 +27,31 @@ export class CreateMovieComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      imagePreview: new FormControl(null, {
+        validators: [Validators.required],
+        //angular differentiate from validators to async validators
+        asyncValidators: [mimeType],
+      }),
+      direction: new FormControl(null, { validators: [Validators.required] }),
+      // Validators.minLength(3)
+      year: new FormControl(null, {
+        validators: [
+          Validators.minLength(4),
+          Validators.maxLength(4),
+          Validators.required,
+        ],
+      }),
+      country: new FormControl(null, { validators: [Validators.required] }),
+      name1: new FormControl(),
+      name2: new FormControl(),
+      // Validators.minLength(3)
+      // Validators.minLength(3)
+    });
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("movieId")) {
         this.mode = "edit";
@@ -60,7 +89,7 @@ export class CreateMovieComponent implements OnInit {
     const movie: Movie = {
       _id: null,
       title: form.value.title,
-      file: form.value.file,
+      file: this.imagePreview,
       direction: form.value.direction,
       year: form.value.year,
       country: form.value.country,
@@ -71,9 +100,20 @@ export class CreateMovieComponent implements OnInit {
       },
     };
 
-    // console.log("create movie", movie);
-    this.moviesService.addMovie(movie);
-    // console.log("onMovieCreate",this.moviesService.addMovie(movie))
-    this.router.navigate(["/home"]);
+    console.log(form.value);
+
+    // // console.log("create movie", movie);
+    // this.moviesService.addMovie(movie);
+    // // console.log("onMovieCreate",this.moviesService.addMovie(movie))
+    // this.router.navigate(["/home"]);
+  }
+
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
   }
 }

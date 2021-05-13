@@ -1,11 +1,7 @@
 <div>
   <div class="container margin-top">
     <h1>Add a <code> Movie</code></h1>
-    <form
-      class="row g-3"
-      #createMovieForm="ngForm"
-      (submit)="onMovieCreate(createMovieForm)"
-    >
+    <form class="row g-3" [formGroup]="form" (submit)="onSavePost()">
       <div class="row">
         <div class="col-sm-6">
           <br />
@@ -16,32 +12,37 @@
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            name="title"
-            [ngModel]="movie?.title"
-            #title="ngModel"
+            formControlName="title"
             required
           />
-          <div
-            [hidden]="title.valid || title.pristine"
-            class="alert alert-danger"
-          >
-            Title is required
-          </div>
+          <div *ngIf="form.get('title').invalid">Title is required</div>
           <br />
           <label class="">Poster</label>
           <div class="mb-3">
             <div class="input-group mb-3">
               <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  ngModel
-                  #file="ngModel"
-                  name="file"
-                />
-                <label class="custom-file-label" for="inputGroupFile01"
-                  >Choose file</label
-                >
+                <div class="file-upload">
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="filePicker.click()"
+                  >
+                    Pick Image
+                  </button>
+                  <input
+                    hidden
+                    type="file"
+                    #filePicker
+                    (change)="onImagePicked($event)"
+                  />
+
+                  <div
+                    class="image-preview"
+                    *ngIf="imagePreview !== '' && imagePreview"
+                  >
+                    <img [src]="imagePreview" [alt]="form.value.title" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -52,14 +53,10 @@
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.direction"
-            #direction="ngModel"
-            name="direction"
+            formControlName="direction"
             required
           />
-          <div [hidden]="direction.valid || direction.pristine">
-            Direction is required
-          </div>
+          <div *ngIf="form.get('direction').invalid">Direction is required</div>
           <label
             >Year <code><sup>*</sup></code></label
           >
@@ -67,14 +64,10 @@
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.year"
-            #year="ngModel"
-            name="year"
+            formControlName="year"
             required
-            minlength="4"
-            maxlength="4"
           />
-          <div [hidden]="year.valid || year.pristine">Year is required</div>
+          <div *ngIf="form.get('year').invalid">Year is required</div>
         </div>
         <div class="col-sm-6">
           <br />
@@ -83,18 +76,14 @@
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.country"
-            #country="ngModel"
-            name="country"
+            formControlName="country"
           />
           <label>Duration</label>
           <input
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.cast.duration"
-            #duration="ngModel"
-            name="duration"
+            formControlName="duration"
           />
           <br />
           <label><code>Cast</code></label
@@ -104,24 +93,20 @@
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.cast.name1"
-            #act1="ngModel"
-            name="name1"
+            formControlName="name1"
           />
           <label>Name</label>
           <input
             class="form-control form-control-lg"
             type="text"
             placeholder=""
-            [ngModel]="movie?.cast.name2"
-            #act2="ngModel"
-            name="name2"
+            formControlName="name2"
           />
           <br />
           <code>Add More</code>
         </div>
       </div>
-      <button class="btn btn-primary maincolor">Add</button>
+      <button type="submit" class="btn btn-primary maincolor">Add</button>
     </form>
   </div>
 </div>
