@@ -5,7 +5,7 @@ const dbConfig = require("./backend/config/db.config.js");
 const app = express();
 
 const movieRoutes = require("./backend/routes/movie");
-app.use("/api/movies", movieRoutes);
+
 
 //camada leitura de dados
 app.use(express.json());
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/movies", movieRoutes);
 // set port, listen for requests
 const PORT = 8080;
 app.listen(PORT, () => {

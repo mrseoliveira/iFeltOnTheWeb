@@ -4,6 +4,7 @@ import { NgForm } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { mimeType } from "./mime-type.validator";
 
 import { Movie } from "./../../models/movie.model";
 
@@ -46,6 +47,7 @@ export class CreateMovieComponent implements OnInit {
         ],
       }),
       country: new FormControl(null, { validators: [Validators.required] }),
+      duration: new FormControl(null, { validators: [Validators.required] }),
       name1: new FormControl(),
       name2: new FormControl(),
       // Validators.minLength(3)
@@ -81,26 +83,26 @@ export class CreateMovieComponent implements OnInit {
     });
   }
 
-  onMovieCreate(form: NgForm) {
-    if (form.invalid) {
+  onMovieCreate() {
+    if (this.form.invalid) {
       return;
     }
 
     const movie: Movie = {
       _id: null,
-      title: form.value.title,
+      title: this.form.value.title,
       file: this.imagePreview,
-      direction: form.value.direction,
-      year: form.value.year,
-      country: form.value.country,
-      duration: form.value.duration,
+      direction: this.form.value.direction,
+      year: this.form.value.year,
+      country: this.form.value.country,
+      duration: this.form.value.duration,
       cast: {
-        name1: form.value.name1,
-        name2: form.value.name2,
+        name1: this.form.value.name1,
+        name2: this.form.value.name2,
       },
     };
 
-    console.log(form.value);
+    console.log(this.form.value);
 
     // // console.log("create movie", movie);
     // this.moviesService.addMovie(movie);
@@ -110,6 +112,9 @@ export class CreateMovieComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ imagePreview: file });
+    //the next line will call the validators we have above in the FormGroup, that will cann the mimetype validator
+    this.form.get("imagePreview").updateValueAndValidity();
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {

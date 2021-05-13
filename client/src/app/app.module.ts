@@ -1,7 +1,7 @@
 import { MoviesService } from "./components/movie.service";
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule, ChangeDetectionStrategy } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { NgModule } from "@angular/core";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 
@@ -19,7 +19,7 @@ import { CreateMovieComponent } from "./components/movies/create/createMovie.com
     ListMoviesComponent,
     CreateMovieComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, ReactiveFormsModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
