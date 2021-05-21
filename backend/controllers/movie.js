@@ -1,5 +1,14 @@
 const Movie = require("../models/movies");
 const mongoose = require("mongoose");
+const multer = require("multer");
+
+
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/jpg": "jpg",
+};
+
 
 const cors = require("cors");
 
@@ -7,14 +16,46 @@ let corsOptions = {
   origin: "http://localhost:4200",
 };
 
+
+//multer.diskStorage() to configure how multer works the string
+const storage = multer.diskStorage({
+  //multer.diskStorage {destination:()=>{}, filename:()=>{}}
+  destination: (req, file, cb) => {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    //security measure
+    let error = new Error("Invalid mime type");
+    if (isValid) {
+      error = null;
+    }
+    //guarda nesta pasta
+    //callback cb (error, filename : string)
+    cb(error, "backend/images");
+  },
+  //renomeia o ficheiro
+  filename: (req, file, cb) => {
+    //any space will be replaced with an -
+    const name = file.originalname.toLowerCase().split(" ").join("-");
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    //callback cb (error, filename : string)
+    //filename = name-date.ext (unique name)
+    cb(null, name + "-" + Date.now() + "." + ext);
+  },
+});
+
+
 exports.createMovie =
   ("/api/movies",
   cors(corsOptions),
+  multer({ storage: storage }).single("image"),
   (req, res, next) => {
+
+
+    const url = req.protocol + "://" + req.get("host");
+
+
     const movie = new Movie({
-      _id: req.body.id,
       title: req.body.title,
-      file: req.body.file,
+      file: url + "/images/" + req.body.file,
       direction: req.body.direction,
       year: req.body.year,
       country: req.body.country,
@@ -25,16 +66,22 @@ exports.createMovie =
       },
     });
 
+
+    // console.log(movie)
+
     movie
       .save()
       .then((movieAdded) => {
+        // console.log('movieId',movieAdded._id)
         // console.log("controller server", movieAdded._id);
         res.status(201).json({
           message: "Movie created",
           movieId: movieAdded._id,
         });
       })
-      .catch();
+      .catch((err)=>{
+        console.log('erro')
+      });
 
   });
 

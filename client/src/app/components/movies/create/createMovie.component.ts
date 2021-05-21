@@ -84,6 +84,7 @@ export class CreateMovieComponent implements OnInit {
   }
 
   onMovieCreate() {
+
     if (this.form.invalid) {
       return;
     }
@@ -102,10 +103,10 @@ export class CreateMovieComponent implements OnInit {
       },
     };
 
-    console.log(this.form.value);
+    // console.log(this.form.value);
 
     // // console.log("create movie", movie);
-    // this.moviesService.addMovie(movie);
+    this.moviesService.addMovie(movie);
     // // console.log("onMovieCreate",this.moviesService.addMovie(movie))
     // this.router.navigate(["/home"]);
   }

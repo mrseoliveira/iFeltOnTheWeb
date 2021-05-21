@@ -1,39 +1,52 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const dbConfig = require("./backend/config/db.config.js");
 const app = express();
 
 const movieRoutes = require("./backend/routes/movie");
 
+const cors = require("cors");
 
-//camada leitura de dados
-app.use(express.json());
-app.use(express.urlencoded());
+let corsOptions = {
+  origin: "http://localhost:4200",
+};
+
+cors(corsOptions);
 
 //camada mongoose
-// mongoose
-//   // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-//   .connect(`mongodb+srv://${dbConfig.HOST}/${dbConfig.DB}`, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("Successfully connect to MongoDB.");
-//   })
-//   .catch((err) => {
-//     console.error("Connection error", err);
-//     process.exit();
-//   });
-
 mongoose
-  .connect(
-    "mongodb://localhost:27017/ifelt",
-    { useNewUrlParser: true },
-    { useUnifiedTopology: true }
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.log(error));
+//   // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  .connect(`mongodb+srv://${dbConfig.HOST}/${dbConfig.DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
+  })
+  .catch((err) => {
+    console.error("Connection error", err);
+    process.exit();
+  });
+
+//camada leitura de dados
+app.use(express.json({limit: '50mb', extended: true}));
+app.use(express.urlencoded());
+
+
+
+app.use("/images", express.static(path.join("backend/images")));
+
+
+// mongoose
+//   .connect(
+//     "mongodb://localhost:27017/ifelt",
+//     { useNewUrlParser: true },
+//     { useUnifiedTopology: true }
+//   )
+//   .then(() => console.log("Connected to MongoDB"))
+//   .catch((error) => console.log(error));
 
 //camada de configuração dos pedidos
 app.use((req, res, next) => {
@@ -46,6 +59,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
+  res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
