@@ -3,7 +3,7 @@ export interface Movie {
   title: string;
   file: string;
   direction: string;
-  year: number;
+  year: string;
   country: string;
   duration: string;
   cast: {

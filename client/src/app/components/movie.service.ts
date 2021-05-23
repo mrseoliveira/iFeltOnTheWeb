@@ -38,14 +38,26 @@ export class MoviesService {
     return this.emotions;
   }
 
-  addMovie(movie: Movie) {
+  addMovie(movie: Movie, file:File) {
+    const movieData = new FormData();
+    movieData.append("title", movie.title);
+    movieData.append("country", movie.country);
+    movieData.append("file", file);
+    movieData.append("year", movie.year);
+    movieData.append("direction", movie.direction);
+
+
+    console.log(movieData)
       this.httpClient
-      .post<{message:string, movieId:number}>("http://localhost:8080/api/movies", movie)
+      .post<{message:string, movieId:number}>("http://localhost:8080/api/movies", movieData)
       .subscribe((responseData) => {
         console.log("responseData", responseData.movieId);
         this.router.navigate(["/"]);
       });
   }
+
+
+
 
   getMoviesUpdateListener() {
     // return this.moviesUpdated.asObservable();

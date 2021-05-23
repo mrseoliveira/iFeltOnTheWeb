@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { mimeType } from "./mime-type.validator";
 
 import { Movie } from "./../../models/movie.model";
+import { SelectorMatcher } from "@angular/compiler";
 
 @Component({
   selector: "app-createMovie",
@@ -50,19 +51,21 @@ export class CreateMovieComponent implements OnInit {
       duration: new FormControl(null, { validators: [Validators.required] }),
       name1: new FormControl(),
       name2: new FormControl(),
-      // Validators.minLength(3)
-      // Validators.minLength(3)
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
+
       if (paramMap.has("movieId")) {
         this.mode = "edit";
         this.movieId = paramMap.get("movieId");
         // this.movieId = +this.getId;
+
         this.moviesService
           .getMovie(this.movieId)
           .subscribe((movieReceived: Movie) => {
-            // console.log(movie);
+
+          //  console.log(movieReceived);
+
             this.movie = {
               _id: movieReceived._id,
               title: movieReceived.title,
@@ -92,7 +95,7 @@ export class CreateMovieComponent implements OnInit {
     const movie: Movie = {
       _id: null,
       title: this.form.value.title,
-      file: this.imagePreview,
+      file: this.form.value.imagePreview,
       direction: this.form.value.direction,
       year: this.form.value.year,
       country: this.form.value.country,
@@ -106,10 +109,12 @@ export class CreateMovieComponent implements OnInit {
     // console.log(this.form.value);
 
     // // console.log("create movie", movie);
-    this.moviesService.addMovie(movie);
+    this.moviesService.addMovie(movie, this.form.value.imagePreview);
     // // console.log("onMovieCreate",this.moviesService.addMovie(movie))
     // this.router.navigate(["/home"]);
   }
+
+
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
