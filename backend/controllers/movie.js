@@ -51,10 +51,15 @@ var storage = multer.diskStorage({
     if (isValid) {
         error = null;
     }
-    cb(null, '../images')
+    cb(null, 'backend/images')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
+    const name = file.originalname.toLowerCase().split(" ").join("-");
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    //callback cb (error, filename : string)
+    //filename = name-date.ext (unique name)
+    cb(null, name + "-" + Date.now() + "." + ext);
+    // cb(null, file.fieldname + '-' + Date.now())
   }
 })
 
