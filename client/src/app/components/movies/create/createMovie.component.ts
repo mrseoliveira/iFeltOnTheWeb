@@ -30,6 +30,7 @@ export class CreateMovieComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
+      _id: new FormControl(null),
       title: new FormControl(null, {
         validators: [Validators.required],
       }),
@@ -64,22 +65,22 @@ export class CreateMovieComponent implements OnInit {
           .getMovie(this.movieId)
           .subscribe((movieReceived: Movie) => {
 
-          //  console.log(movieReceived);
+       console.log(movieReceived);
 
-            this.movie = {
+       this.form.setValue({
               _id: movieReceived._id,
               title: movieReceived.title,
-              file: movieReceived.file,
+              imagePreview: movieReceived.file,
               direction: movieReceived.direction,
               year: movieReceived.year,
               country: movieReceived.country,
               duration: movieReceived.duration,
-              cast: {
-                name1: movieReceived.cast.name1,
+              name1 : movieReceived.cast.name1,
                 name2: movieReceived.cast.name2,
-              },
-            };
-          });
+              })
+      });
+      //to preview image when editing
+
       } else {
         this.mode = "create";
       }
