@@ -46,8 +46,8 @@ export class MoviesService {
     movieData.append("year", movie.year);
     movieData.append("direction", movie.direction);
     movieData.append("duration", movie.duration);
-    movieData.append("cast.name1", movie.cast.name1)
-    movieData.append("cast.name2", movie.cast.name2)
+    movieData.append("name1", movie.cast.name1)
+    movieData.append("name2", movie.cast.name2)
 
     // for (let [key, value] of movieData.entries()) {
     //   console.log(`${key}: ${value}`);

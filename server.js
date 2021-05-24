@@ -41,44 +41,6 @@ app.use(express.urlencoded());
 
 app.use(express.static(__dirname + "./backend/images"));
 
-// app.post('/api/movies',multer({ storage: storage }).single("file"),
-//   (req, res, next) => {
-//    console.log("entrou");
-
-//       const url = req.protocol + "://" + req.get("host");
-
-//       console.log(req.body)
-      // // storage(req,res,(ee)=>{
-
-
-      // const movie = new Movie({
-      //   title: req.body.title,
-      //   file: url + "/images/" + req.file,
-      //   direction: req.body.direction,
-      //   year: req.body.year,
-      //   country: req.body.country,
-      //   duration: req.body.duration,
-      //   cast: {
-      //     name1: req.body.cast.name1,
-      //     name2: req.body.cast.name2,
-      //   },
-      // })
-
-      // movie
-      //   .save()
-      //   .then((movieAdded) => {
-      //     // console.log('movieId',movieAdded._id)
-      //     // console.log("controller server", movieAdded._id);
-      //     res.status(201).json({
-      //       message: "Movie created",
-      //       movieId: movieAdded._id,
-      //     });
-      //   })
-      //   .catch((err)=>{
-      //     console.log('erro')
-      //   });
-
-// })
 
 
 // mongoose
