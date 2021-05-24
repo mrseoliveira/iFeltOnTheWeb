@@ -45,13 +45,18 @@ export class MoviesService {
     movieData.append("file", file);
     movieData.append("year", movie.year);
     movieData.append("direction", movie.direction);
+    movieData.append("duration", movie.duration);
+    movieData.append("cast.name1", movie.cast.name1)
+    movieData.append("cast.name2", movie.cast.name2)
 
+    // for (let [key, value] of movieData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
 
-    console.log(movieData)
       this.httpClient
-      .post<{message:string, movieId:number}>("http://localhost:8080/api/movies", movieData)
+      .post<{message:string, movie:Movie}>("http://localhost:8080/api/movies", movieData)
       .subscribe((responseData) => {
-        console.log("responseData", responseData.movieId);
+        console.log("responseData", responseData);
         this.router.navigate(["/"]);
       });
   }

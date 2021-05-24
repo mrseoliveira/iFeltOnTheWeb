@@ -1,8 +1,5 @@
-const Movie = require("../models/movies");
-const mongoose = require("mongoose");
-const multer = require("multer");
-const path = require("path")
 
+const Movie = require("../models/movies");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -18,31 +15,20 @@ let corsOptions = {
 };
 
 
-var upload = multer({ dest: '../images' })
-
-
-exports.createMovie =
-  (upload.single('uploaded_file'), (req, res) => {
-  // req.file is the name of your file in the form above, here 'uploaded_file'
-  // req.body will hold the text fields, if there were any
-  console.log('entrou')
-  console.log(req.body)
-  console.log(req.file)
-});
-
-// //multer.diskStorage() to configure how multer works the string
+//multer.diskStorage() to configure how multer works the string
 // const storage = multer.diskStorage({
 //   //multer.diskStorage {destination:()=>{}, filename:()=>{}}
 //   destination: (req, file, cb) => {
-//     const isValid = MIME_TYPE_MAP[file.mimetype];
-//     //security measure
-//     let error = new Error("Invalid mime type");
-//     if (isValid) {
-//       error = null;
-//     }
+//     // const isValid = MIME_TYPE_MAP[file.mimetype];
+//     // //security measure
+//     // let error = new Error("Invalid mime type");
+//     // if (isValid) {
+//     //   error = null;
+//     // }
+//     cb(null, '../images')
 //     //guarda nesta pasta
 //     //callback cb (error, filename : string)
-//     cb(error, "../images");
+//     // cb(error, "../images");
 //   },
 //   //renomeia o ficheiro
 //   filename: (req, file, cb) => {
@@ -53,26 +39,45 @@ exports.createMovie =
 //     //filename = name-date.ext (unique name)
 //     // cb(null, name + "-" + Date.now() + "." + ext);
 //     // cb(null, name + "." + ext);
-//     cb(null, `${new Date().toISOString().replace(/:/g,'-')}.${extension}`)
+//     cb(null, name + "-" + Date.now() + "." + ext);
 //   },
 // });
 
+var multer = require('multer')
 
-// exports.createMovie =
-//   ("/api/movies",
-//   cors(corsOptions), (req, res)=>{
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    if (isValid) {
+        error = null;
+    }
+    cb(null, '../images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+
+var upload = multer({ storage: storage }).single('file')
+
+exports.createMovie = ("/api/movies", function (req, res) {
+
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading.
+    } else if (err) {
+      // An unknown error occurred when uploading.
+    }
+
+    console.log(req.file)
+    // Everything went fine.
+  })
+})
+  // const url = req.protocol + "://" + req.get("host");
+
+      // // storage(req,res,(ee)=>{
 
 
-//   let upload = multer({ storage: storage }).single("image")
-
-//   upload(req, res, function(err){
-
-//     const url = req.protocol + "://" + req.get("host");
-
-//     console.log(req.file.filename)
-//     // storage(req,res,(ee)=>{
-
-//   })})
     // const movie = new Movie({
     //   title: req.body.title,
     //   file: url + "/images/" + req.file,
@@ -85,9 +90,6 @@ exports.createMovie =
     //     name2: req.body.cast.name2,
     //   },
     // })
-  // });
-
-
 
     // movie
     //   .save()
