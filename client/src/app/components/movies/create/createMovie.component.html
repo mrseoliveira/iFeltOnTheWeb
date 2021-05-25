@@ -109,7 +109,12 @@
           placeholder=""
           formControlName="_id"
         /></div>
+        <div *ngIf="mode==='create' else update">
       <button type="submit" class="btn btn-primary maincolor">Add</button>
+      </div>
+      <ng-template #update>
+        <button type="submit" class="btn btn-primary maincolor">Update</button>
+      </ng-template>
     </div>
     </form>
   </div>

@@ -129,8 +129,6 @@ export class CreateMovieComponent implements OnInit {
     }
     this.form.reset();
 
-
-
   }
 
 
