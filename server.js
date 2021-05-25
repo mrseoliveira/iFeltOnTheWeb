@@ -35,11 +35,12 @@ mongoose
 //camada leitura de dados
 app.use(express.json({limit: '50mb', extended: true}));
 app.use(express.urlencoded());
-
+app.use("/images", express.static(path.join("backend/images")));
 
 // app.use("/images", express.static(path.join("./backend/images")));
 
-app.use(express.static(__dirname + "./backend/images"));
+// app.use(express.static(__dirname + "backend/images"));
+
 
 
 

@@ -29,7 +29,7 @@ export class MoviesService {
       )
       .subscribe((postData) => {
         this.movies = postData.movies;
-        // console.log(this.movies);
+      //  console.log('getMovies',this.movies);
         this.moviesUpdated.next([...this.movies]);
       });
   }
@@ -73,5 +73,26 @@ export class MoviesService {
     return this.httpClient
       .get<{ returnedMovie: Movie }>("http://localhost:8080/api/movies/" + id)
       .pipe(map((res) => res.returnedMovie));
+  }
+
+
+  updateMovie(movie:Movie, file:File, id){
+
+    const movieData = new FormData();
+    movieData.append("title", movie.title);
+    movieData.append("country", movie.country);
+    movieData.append("file", file);
+    movieData.append("year", movie.year);
+    movieData.append("direction", movie.direction);
+    movieData.append("duration", movie.duration);
+    movieData.append("name1", movie.cast.name1)
+    movieData.append("name2", movie.cast.name2)
+
+    this.httpClient
+    .put<{message:string, movie:Movie}>("http://localhost:8080/api/movies/" + id, movieData)
+    .subscribe((responseData) => {
+      console.log("responseData", responseData);
+      this.router.navigate(["/"]);
+    });
   }
 }

@@ -3,8 +3,9 @@ import { MoviesService } from "./../../movie.service";
 import { NgForm } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators , ReactiveFormsModule} from "@angular/forms";
 import { mimeType } from "./mime-type.validator";
+
 
 import { Movie } from "./../../models/movie.model";
 import { SelectorMatcher } from "@angular/compiler";
@@ -65,7 +66,7 @@ export class CreateMovieComponent implements OnInit {
           .getMovie(this.movieId)
           .subscribe((movieReceived: Movie) => {
 
-       console.log(movieReceived);
+      //  console.log(movieReceived);
 
        this.form.setValue({
               _id: movieReceived._id,
@@ -78,6 +79,7 @@ export class CreateMovieComponent implements OnInit {
               name1 : movieReceived.cast.name1,
                 name2: movieReceived.cast.name2,
               })
+
       });
       //to preview image when editing
 
@@ -93,26 +95,42 @@ export class CreateMovieComponent implements OnInit {
       return;
     }
 
-    const movie: Movie = {
-      _id: null,
-      title: this.form.value.title,
-      file: this.form.value.imagePreview,
-      direction: this.form.value.direction,
-      year: this.form.value.year,
-      country: this.form.value.country,
-      duration: this.form.value.duration,
-      cast: {
-        name1: this.form.value.name1,
-        name2: this.form.value.name2,
-      },
-    };
+    if (this.mode === "create") {
+      const movie: Movie = {
+        _id: null,
+        title: this.form.value.title,
+        file: this.form.value.imagePreview,
+        direction: this.form.value.direction,
+        year: this.form.value.year,
+        country: this.form.value.country,
+        duration: this.form.value.duration,
+        cast: {
+          name1: this.form.value.name1,
+          name2: this.form.value.name2,
+        },
+      };
+      this.moviesService.addMovie(movie, this.form.value.imagePreview);
 
-    // console.log(this.form.value);
+    } else {
+      const movie: Movie = {
+        _id:+this.form.value._id,
+        title: this.form.value.title,
+        file: this.form.value.imagePreview,
+        direction: this.form.value.direction,
+        year: this.form.value.year,
+        country: this.form.value.country,
+        duration: this.form.value.duration,
+        cast: {
+          name1: this.form.value.name1,
+          name2: this.form.value.name2,
+        },
+      };
+      this.moviesService.updateMovie(movie, this.form.value.imagePreview, this.form.value._id);
+    }
+    this.form.reset();
 
-    // // console.log("create movie", movie);
-    this.moviesService.addMovie(movie, this.form.value.imagePreview);
-    // // console.log("onMovieCreate",this.moviesService.addMovie(movie))
-    // this.router.navigate(["/home"]);
+
+
   }
 
 

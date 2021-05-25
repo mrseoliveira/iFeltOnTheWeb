@@ -48,17 +48,13 @@ exports.createMovie = ("/api/movies", function (req, res) {
       // An unknown error occurred when uploading.
     }
 
+
     // console.log(req.file)
-    // Everything went fine.
-
     const url = req.protocol + "://" + req.get("host");
-
-      // // storage(req,res,(ee)=>{
-
 
     const movie = new Movie({
       title: req.body.title,
-      file: url + "/images/" + req.file,
+      file: url  + '/images/'+ req.file.filename,
       direction: req.body.direction,
       year: req.body.year,
       country: req.body.country,
@@ -68,6 +64,8 @@ exports.createMovie = ("/api/movies", function (req, res) {
         name2: req.body.name2,
       },
     })
+
+
 
     movie
       .save()
@@ -87,15 +85,51 @@ exports.createMovie = ("/api/movies", function (req, res) {
 })
 })
 
+exports.updateMovie = ("/api/movies/:id", function (req, res) {
+
+  upload(req, res, function (err) {
+
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading.
+    } else if (err) {
+      // An unknown error occurred when uploading.
+    }
+
+
+    const url = req.protocol + "://" + req.get("host");
+
+
+    // const movie = new Movie({
+    //   title: req.body.title,
+    //   file: url + "/images/" + req.file,
+    //   direction: req.body.direction,
+    //   year: req.body.year,
+    //   country: req.body.country,
+    //   duration: req.body.duration,
+    //   cast: {
+    //     name1: req.body.name1,
+    //     name2: req.body.name2,
+    //   },
+    // })
+
+    // movie.updateOne({ _id: req.params.id }, movie).then((result) => {
+    //   res.status(200).json({ message: "Update successful!" });
+    // });
+
+
+})
+})
+
+
 exports.listMovies =
   ("/api/movies",
   (req, res, next) => {
     Movie.find()
-      .then((documents) => {
+      .then((movies) => {
         // console.log("getMovies server", documents);
         res.status(200).json({
           message: "Movies sent",
-          movies: documents,
+          movies: movies,
         });
       })
       .catch(() => {
@@ -104,6 +138,8 @@ exports.listMovies =
         });
       });
   });
+
+
 
 exports.getMovie =
   ("api/movies/:id",

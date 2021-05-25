@@ -22,8 +22,9 @@ export class ListMoviesComponent implements OnInit {
     this.MoviesSub = this.moviesService
       .getMoviesUpdateListener()
       .subscribe((movies: Movie[]) => {
-        // console.log("ngOnInit", movies);
+        // console.log('getMoviesUpdate no list component', movies)
         this.movies = movies;
+
       });
   }
 }
