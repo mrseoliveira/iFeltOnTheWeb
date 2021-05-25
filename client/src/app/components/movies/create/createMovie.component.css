@@ -19,9 +19,13 @@
   border-left: 5px solid #efefef; /* grey */
 }
 
+input[type="file"] {
+  visibility: hidden;
+}
+
 .image-preview {
-  height: 5rem;
-  margin: 1rem 0;
+  height: 10rem;
+  margin: 2rem 0;
 }
 
 .image-preview img {

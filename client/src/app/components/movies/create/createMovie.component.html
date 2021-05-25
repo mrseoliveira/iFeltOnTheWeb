@@ -19,6 +19,9 @@
           <br />
           <label class="">Poster</label>
           <div class="mb-3">
+            <div class="image-preview" *ngIf="form.value.imagePreview !== '' && form.value.imagePreview && form.get('imagePreview').valid">
+              <img [src]="form.value.imagePreview" [alt]="form.value.title">
+            </div>
             <div class="input-group mb-3">
               <div class="custom-file">
                 <div class="file-upload">
@@ -36,12 +39,7 @@
                     (change)="onImagePicked($event)"
                   />
 
-                  <div
-                    class="image-preview"
-                    *ngIf="imagePreview !== '' && imagePreview"
-                  >
-                    <img [src]="imagePreview" [alt]="form.value.title" />
-                  </div>
+
                 </div>
               </div>
             </div>
