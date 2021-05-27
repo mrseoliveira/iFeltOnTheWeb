@@ -18,19 +18,19 @@ cors(corsOptions);
 
 
 //camada mongoose
-mongoose
-//   // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-  .connect(`mongodb+srv://${dbConfig.HOST}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-  })
-  .catch((err) => {
-    console.error("Connection error", err);
-    process.exit();
-  });
+// mongoose
+// //   // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+//   .connect(`mongodb+srv://${dbConfig.HOST}/${dbConfig.DB}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("Successfully connect to MongoDB.");
+//   })
+//   .catch((err) => {
+//     console.error("Connection error", err);
+//     process.exit();
+//   });
 
 //camada leitura de dados
 app.use(express.json({limit: '50mb', extended: true}));
@@ -44,14 +44,14 @@ app.use("/images", express.static(path.join("backend/images")));
 
 
 
-// mongoose
-//   .connect(
-//     "mongodb://localhost:27017/ifelt",
-//     { useNewUrlParser: true },
-//     { useUnifiedTopology: true }
-//   )
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch((error) => console.log(error));
+mongoose
+  .connect(
+    "mongodb://localhost:27017/ifelt",
+    { useNewUrlParser: true },
+    { useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log(error));
 
 //camada de configuração dos pedidos
 app.use((req, res, next) => {

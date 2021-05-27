@@ -1,9 +1,13 @@
 import { AbstractControl } from "@angular/forms";
 import { Observable, Observer, of } from "rxjs";
 
-export const mimeType = (
-  control: AbstractControl
-): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
+export const mimeType = (control: AbstractControl): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
+
+  // mimetype = () => {}
+  //(control: AbstractControl) :
+  // ): Promise | Observable=> {
+  //key error code por exemplo
+
   //when editing we will need to test if the file is a string
   if (typeof control.value === "string") {
     return of(null);

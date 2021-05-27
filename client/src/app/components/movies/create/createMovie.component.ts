@@ -132,16 +132,41 @@ export class CreateMovieComponent implements OnInit {
   }
 
 
-
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ imagePreview: file });
-    //the next line will call the validators we have above in the FormGroup, that will cann the mimetype validator
-    this.form.get("imagePreview").updateValueAndValidity();
+    this.form.get('imagePreview').updateValueAndValidity();
+    console.log(file);
+
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+
     reader.onload = () => {
       this.imagePreview = reader.result as string;
     };
+
+    reader.readAsDataURL(file);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+    //todo o event vai embrulhado
+    //HTMLInputElement permite fazer type conversion, para lermos o elemento como um ficheiro
+    //queremos guardor isto no nosso controlador, para isso criamos o imagePreview no formulario.
+    //reparem que não precisamos ter o controlado no HTML se não existir
+    //patchValue permite fazer set de um unico controlador
+    //depois criamos o objecto file que vai ser prescrutado par percebermos que tipo é
+    //updateValueAndValidity comunica ao angular que alterei o valor do campo imagePreview e pedimos-lhe para ele validar, para ver se está de acordo com as validações que temos.
+    // fileREader permite ler um ficheiro
+    // que tem uma função que permite ler o conteudo de um ficheiro e mostra-lo
+    //the next line will call the validators we have above in the FormGroup, that will cann the mimetype validator
+    //como é assincrono usamos uma callback

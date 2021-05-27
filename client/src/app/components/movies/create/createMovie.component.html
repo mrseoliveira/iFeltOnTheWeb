@@ -19,8 +19,8 @@
           <br />
           <label class="">Poster</label>
           <div class="mb-3">
-            <div class="image-preview" *ngIf="form.value.imagePreview !== '' && form.value.imagePreview && form.get('imagePreview').valid">
-              <img [src]="form.value.imagePreview" [alt]="form.value.title">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('imagePreview').valid">
+              <img [src]="imagePreview" [alt]="form.value.title">
             </div>
             <div class="input-group mb-3">
               <div class="custom-file">
@@ -108,14 +108,16 @@
           type="text"
           placeholder=""
           formControlName="_id"
-        /></div>
-        <div *ngIf="mode==='create' else update">
+        />
+      </div>
+        <div *ngIf="mode == 'create' else update">
       <button type="submit" class="btn btn-primary maincolor">Add</button>
       </div>
       <ng-template #update>
         <button type="submit" class="btn btn-primary maincolor">Update</button>
       </ng-template>
     </div>
+
     </form>
   </div>
 </div>
