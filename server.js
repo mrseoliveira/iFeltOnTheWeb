@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const multer = require("multer")
 const dbConfig = require("./backend/config/db.config.js");
 const app = express();
 

@@ -38,11 +38,12 @@ export class MoviesService {
     return this.emotions;
   }
 
-  addMovie(movie: Movie, file:File) {
+  addMovie(movie: Movie) {
+
     const movieData = new FormData();
     movieData.append("title", movie.title);
     movieData.append("country", movie.country);
-    movieData.append("file", file);
+    movieData.append("file", movie.file);
     movieData.append("year", movie.year);
     movieData.append("direction", movie.direction);
     movieData.append("duration", movie.duration);
@@ -76,12 +77,12 @@ export class MoviesService {
   }
 
 
-  updateMovie(movie:Movie, file:File, id){
+  updateMovie(movie:Movie, id:number){
 
     const movieData = new FormData();
     movieData.append("title", movie.title);
     movieData.append("country", movie.country);
-    movieData.append("file", file);
+    movieData.append("file", movie.file);
     movieData.append("year", movie.year);
     movieData.append("direction", movie.direction);
     movieData.append("duration", movie.duration);

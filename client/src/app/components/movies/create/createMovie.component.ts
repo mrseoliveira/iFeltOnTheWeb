@@ -18,7 +18,7 @@ import { SelectorMatcher } from "@angular/compiler";
 export class CreateMovieComponent implements OnInit {
   private mode = "create";
   private movieId: string;
-  private movie: Movie;
+  // private movie: Movie;
 
   form: FormGroup;
   imagePreview: string;
@@ -66,7 +66,7 @@ export class CreateMovieComponent implements OnInit {
           .getMovie(this.movieId)
           .subscribe((movieReceived: Movie) => {
 
-      //  console.log(movieReceived);
+
 
        this.form.setValue({
               _id: movieReceived._id,
@@ -109,7 +109,7 @@ export class CreateMovieComponent implements OnInit {
           name2: this.form.value.name2,
         },
       };
-      this.moviesService.addMovie(movie, this.form.value.imagePreview);
+      this.moviesService.addMovie(movie);
 
     } else {
       const movie: Movie = {
@@ -125,7 +125,7 @@ export class CreateMovieComponent implements OnInit {
           name2: this.form.value.name2,
         },
       };
-      this.moviesService.updateMovie(movie, this.form.value.imagePreview, this.form.value._id);
+      this.moviesService.updateMovie(movie, this.form.value._id);
     }
     this.form.reset();
 
@@ -136,7 +136,7 @@ export class CreateMovieComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ imagePreview: file });
     this.form.get('imagePreview').updateValueAndValidity();
-    console.log(file);
+    // console.log(file);
 
     const reader = new FileReader();
 

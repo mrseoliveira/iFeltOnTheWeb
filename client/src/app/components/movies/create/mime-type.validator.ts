@@ -6,14 +6,27 @@ export const mimeType = (control: AbstractControl): Promise<{ [key: string]: any
   // mimetype = () => {}
   //(control: AbstractControl) :
   // ): Promise | Observable=> {
-  //key error code por exemplo
+  //key = error code por exemplo
+  //key:string é isto pode ser uma propriedade com qualquer nome mas tem que ser do tipo string
 
   //when editing we will need to test if the file is a string
   if (typeof control.value === "string") {
     return of(null);
   }
+
+  //lemos o controlador como file
+  // e precisamos de um reader
+
   const file = control.value as File;
   const fileReader = new FileReader();
+
+  //converter o file num observble para processarmos de forma assincrona
+  // o observable cria o observable e diz: cada observador pode adicionar um evento
+  // onloadend que permite ler um ficheiro e retornar se é valido ou não para determnados
+  // a seguir implementamos a forma como validamos, usndo o Uint8Arrray permite-nos ler o
+  //codigo binario de um ficheiro
+
+
   const frObs = Observable.create(
     (observer: Observer<{ [key: string]: any }>) => {
       fileReader.addEventListener("loadend", () => {
