@@ -19,6 +19,7 @@ export class CreateMovieComponent implements OnInit {
   private mode = "create";
   private movieId: string;
   // private movie: Movie;
+  
 
   form: FormGroup;
   imagePreview: string;

@@ -39,7 +39,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('file')
 
-exports.createMovie = ("/api/movies", function (req, res) {
+exports.createMovie = ("", function (req, res) {
 
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
