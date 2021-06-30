@@ -19,7 +19,7 @@ export class CreateMovieComponent implements OnInit {
   private mode = "create";
   private movieId: string;
   // private movie: Movie;
-  
+
 
   form: FormGroup;
   imagePreview: string;
@@ -57,8 +57,8 @@ export class CreateMovieComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-
       if (paramMap.has("movieId")) {
+        console.log("entra")
         this.mode = "edit";
         this.movieId = paramMap.get("movieId");
         // this.movieId = +this.getId;
@@ -91,7 +91,7 @@ export class CreateMovieComponent implements OnInit {
   }
 
   onMovieCreate() {
-
+    console.log("entra")
     if (this.form.invalid) {
       return;
     }
@@ -148,15 +148,6 @@ export class CreateMovieComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 

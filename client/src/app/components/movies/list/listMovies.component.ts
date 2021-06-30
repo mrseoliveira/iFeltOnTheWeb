@@ -22,7 +22,7 @@ export class ListMoviesComponent implements OnInit {
     this.MoviesSub = this.moviesService
       .getMoviesUpdateListener()
       .subscribe((movies: Movie[]) => {
-        // console.log('getMoviesUpdate no list component', movies)
+        console.log('getMoviesUpdateListener', movies)
         this.movies = movies;
 
       });
