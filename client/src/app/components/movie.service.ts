@@ -80,6 +80,7 @@ export class MoviesService {
   updateMovie(movie:Movie, id:number){
 
     const movieData = new FormData();
+
     movieData.append("title", movie.title);
     movieData.append("country", movie.country);
     movieData.append("file", movie.file);

@@ -1,4 +1,3 @@
-
 const Movie = require("../models/movies");
 
 const MIME_TYPE_MAP = {
@@ -7,25 +6,21 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg",
 };
 
-
 const cors = require("cors");
 
 let corsOptions = {
   origin: "http://localhost:4200",
 };
 
-
-
-
-var multer = require('multer')
+var multer = require("multer");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     if (isValid) {
-        error = null;
+      error = null;
     }
-    cb(null, 'backend/images')
+    cb(null, "backend/images");
   },
   filename: function (req, file, cb) {
     const name = file.originalname.toLowerCase().split(" ").join("-");
@@ -34,92 +29,87 @@ var storage = multer.diskStorage({
     //filename = name-date.ext (unique name)
     cb(null, name + "-" + Date.now() + "." + ext);
     // cb(null, file.fieldname + '-' + Date.now())
-  }
-})
+  },
+});
 
-var upload = multer({ storage: storage }).single('file')
+var upload = multer({ storage: storage }).single("file");
 
-exports.createMovie = ("", function (req, res) {
+exports.createMovie =
+  ("",
+  function (req, res) {
+    upload(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        // A Multer error occurred when uploading.
+      } else if (err) {
+        // An unknown error occurred when uploading.
+      }
 
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-    } else if (err) {
-      // An unknown error occurred when uploading.
-    }
+      // console.log(req.file)
+      const url = req.protocol + "://" + req.get("host");
 
-
-    // console.log(req.file)
-    const url = req.protocol + "://" + req.get("host");
-
-    const movie = new Movie({
-      title: req.body.title,
-      file: url  + '/images/'+ req.file.filename,
-      direction: req.body.direction,
-      year: req.body.year,
-      country: req.body.country,
-      duration: req.body.duration,
-      cast: {
-        name1: req.body.name1,
-        name2: req.body.name2,
-      },
-    })
-
-
-
-    movie
-      .save()
-      .then((movieAdded) => {
-        // console.log('movieId',movieAdded._id)
-        // console.log("controller server", movieAdded._id);
-        res.status(201).json({
-          message: "Movie created",
-          movieId: movieAdded._id,
-        });
-      })
-      .catch((err)=>{
-        console.log('erro')
+      const movie = new Movie({
+        title: req.body.title,
+        file: url + "/images/" + req.file.filename,
+        direction: req.body.direction,
+        year: req.body.year,
+        country: req.body.country,
+        duration: req.body.duration,
+        cast: {
+          name1: req.body.name1,
+          name2: req.body.name2,
+        },
       });
 
+      movie
+        .save()
+        .then((movieAdded) => {
+          // console.log('movieId',movieAdded._id)
+          // console.log("controller server", movieAdded._id);
+          res.status(201).json({
+            message: "Movie created",
+            movieId: movieAdded._id,
+          });
+        })
+        .catch((err) => {
+          console.log("erro");
+        });
+    });
+  });
 
-})
-})
+exports.updateMovie =
+  ("/api/movies/:id",
+  function (req, res) {
+    upload(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        // A Multer error occurred when uploading.
+      } else if (err) {
+        // An unknown error occurred when uploading.
+      }
 
-exports.updateMovie = ("/api/movies/:id", function (req, res) {
+      const url = req.protocol + "://" + req.get("host");
+      console.log(req.params.id);
+      const movie = new Movie({
+        _id: req.params.id,
+        title: req.body.title,
+        file: url + "/images/" + req.file,
+        direction: req.body.dlsirection,
+        year: req.body.year,
+        country: req.body.country,
+        duration: req.body.duration,
+        cast: {
+          name1: req.body.name1,
+          name2: req.body.name2,
+        },
+      });
 
-  upload(req, res, function (err) {
-
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-    } else if (err) {
-      // An unknown error occurred when uploading.
-    }
-
-
-    const url = req.protocol + "://" + req.get("host");
-
-
-    // const movie = new Movie({
-    //   title: req.body.title,
-    //   file: url + "/images/" + req.file,
-    //   direction: req.body.direction,
-    //   year: req.body.year,
-    //   country: req.body.country,
-    //   duration: req.body.duration,
-    //   cast: {
-    //     name1: req.body.name1,
-    //     name2: req.body.name2,
-    //   },
-    // })
-
-    // movie.updateOne({ _id: req.params.id }, movie).then((result) => {
-    //   res.status(200).json({ message: "Update successful!" });
-    // });
-
-
-})
-})
-
+      const movieToupdate = movie.findOne({ _id: req.params.id });
+      console.log(movieToupdate);
+      // .findByIdAndUpdate({ _id: req.params.id }, { movie })
+      // .then((result) => {
+      //   res.status(200).json({ message: "Update successful!" });
+      // });
+    });
+  });
 
 exports.listMovies =
   ("/api/movies",
@@ -138,8 +128,6 @@ exports.listMovies =
         });
       });
   });
-
-
 
 exports.getMovie =
   ("api/movies/:id",

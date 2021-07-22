@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const movieSchema = mongoose.Schema({
-  // _id: { type: mongoose.Types.ObjectId, primaryKey: true, autoIncrement: true },
+ _id: { type: mongoose.Types.ObjectId, primaryKey: true, autoIncrement: true },
   title: { type: String, required: true },
   file: { type: String },
   direction: { type: String, required: true },

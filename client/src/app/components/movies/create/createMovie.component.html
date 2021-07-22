@@ -73,6 +73,9 @@
           />
           <div *ngIf="form.get('year').invalid">Year is required (four digits)</div>
         </div>
+        
+        
+        
         <div class="col-sm-6">
           <br />
           <label>Country</label>
@@ -109,21 +112,21 @@
           <br />
           <code>Add More</code>
         </div>
-        <div hidden> <input
-          class="form-control form-control-lg"
-          type="text"
-          placeholder=""
-          formControlName="_id"
-        />
       </div>
-        <div *ngIf="mode == 'create' else update">
+        <div *ngIf="mode == 'create' else update" class="createMovieAddButton">
       <button type="submit" class="btn btn-primary maincolor">Add</button>
       </div>
       <ng-template #update>
         <button type="submit" class="btn btn-primary maincolor">Update</button>
       </ng-template>
-    </div>
-
+    
+    <div hidden> <input
+      class="form-control form-control-lg"
+      type="text"
+      placeholder=""
+      formControlName="_id"
+    />
+  </div>
     </form>
   </div>
 </div>
