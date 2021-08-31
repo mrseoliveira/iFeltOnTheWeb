@@ -7,18 +7,19 @@
         ".vscode": true
     },
     "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#fdfeff",
-        "activityBar.activeBorder": "#ff80bf",
-        "activityBar.background": "#fdfeff",
-        "activityBar.foreground": "#15202b",
-        "activityBar.inactiveForeground": "#15202b99",
-        "statusBar.background": "#d4eff5",
-        "statusBar.foreground": "#15202b",
-        "statusBarItem.hoverBackground": "#abe0eb",
-        "tab.activeBorder": "#fdfeff",
-        "titleBar.activeBackground": "#d4eff5",
-        "titleBar.activeForeground": "#15202b",
-        "titleBar.inactiveBackground": "#d4eff599",
-        "titleBar.inactiveForeground": "#15202b99"
-    }
+        "activityBar.activeBackground": "#173a4b",
+        "activityBar.activeBorder": "#ab3484",
+        "activityBar.background": "#173a4b",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#0b1c24",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#173a4b",
+        "tab.activeBorder": "#173a4b",
+        "titleBar.activeBackground": "#0b1c24",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#0b1c2499",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#0b1c24"
 }
